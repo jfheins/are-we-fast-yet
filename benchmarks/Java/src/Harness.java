@@ -47,7 +47,7 @@ public final class Harness {
   }
 
   public static void main(final String[] args) {
-    if (args.length < 2) {
+    if (args.length < 1) {
       printUsage();
       System.exit(1);
     }
