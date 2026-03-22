@@ -37,7 +37,7 @@ public final class Harness {
 
   private static void printUsage() {
     // Checkstyle: stop
-    System.out.println("Harness [benchmark] [num-iterations [inner-iter]]");
+    System.out.println("Harness benchmark [num-iterations [inner-iter]]");
     System.out.println();
     System.out.println("  benchmark      - benchmark class name ");
     System.out.println("  num-iterations - number of times to execute benchmark, default: 1");
@@ -47,7 +47,7 @@ public final class Harness {
   }
 
   public static void main(final String[] args) {
-    if (args.length < 2) {
+    if (args.length < 1) {
       printUsage();
       System.exit(1);
     }
