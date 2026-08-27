@@ -149,6 +149,7 @@ jobs:
       - name: Build
         run: |
           benchmarks/${{ matrix.folder }}/build.sh ${{ matrix.id }}
+          find . -name Benchmarks
 
       - name: ReBench Test Run
         run: |
