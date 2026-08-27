@@ -299,10 +299,10 @@ public class Havlak : Benchmark
     private readonly LoopStructureGraph lsg;    // Loop Structure Graph
 
     // Marker for uninitialized nodes.
-    private const int Unvisited = int.MaxValue;
+    private const int UNVISITED = int.MaxValue;
 
     // Safeguard against pathological algorithm behavior.
-    private const int MaxNonBackPreds = 32 * 1024;
+    private const int MAX_NON_BACK_PREDS = 32 * 1024;
 
     private readonly Vector<Set<object>> nonBackPreds = new Vector<Set<object>>();
     private readonly Vector<Vector<object>> backPreds = new Vector<Vector<object>>();
@@ -357,7 +357,7 @@ public class Havlak : Benchmark
 
       for (int i = 0; i < outerBlocks.Size(); i++) {
         BasicBlock target = outerBlocks.At(i)!;
-        if ((int)(number.At(target) ?? 0) == Unvisited) {
+        if ((int)(number.At(target) ?? 0) == UNVISITED) {
           lastId = DoDFS(target, lastId + 1);
         }
       }
@@ -372,7 +372,7 @@ public class Havlak : Benchmark
       //   - initialize all nodes as unvisited.
       //   - depth-first traversal and numbering.
       //   - unreached BB's are marked as dead.
-      cfg.BasicBlocks.ForEach(bb => number.AtPut(bb, Unvisited));
+      cfg.BasicBlocks.ForEach(bb => number.AtPut(bb, UNVISITED));
 
       DoDFS(cfg.GetStartBasicBlock()!, 0);
     }
@@ -406,7 +406,7 @@ public class Havlak : Benchmark
       if (nodeW.GetNumPred() > 0) {
         nodeW.InEdges.ForEach(nodeV => {
           int v = (int)(number.At(nodeV) ?? 0);
-          if (v != Unvisited) {
+          if (v != UNVISITED) {
             if (IsAncestor(w, v)) {
               backPreds.At(w)!.Append(v);
             } else {
@@ -496,7 +496,7 @@ public class Havlak : Benchmark
             // The algorithm has degenerated. Break and
             // return in this case.
             int nonBackSize = nonBackPreds.At(x.DfsNumber)!.Size();
-            if (nonBackSize > MaxNonBackPreds) {
+            if (nonBackSize > MAX_NON_BACK_PREDS) {
               return;
             }
             StepEProcessNonBackPreds(w, nodePool, workList, x);
